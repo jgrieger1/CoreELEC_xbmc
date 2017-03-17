@@ -61,6 +61,7 @@
 #include "video/guilib/VideoPlayActionProcessor.h"
 #include "video/guilib/VideoVersionHelper.h"
 #include "video/windows/GUIWindowVideoNav.h"
+#include "network/upnp/UPnP.h"
 
 #include <algorithm>
 #include <iterator>
@@ -116,6 +117,12 @@ bool CGUIDialogVideoInfo::OnMessage(CGUIMessage& message)
 
       if (m_startUserrating != m_movieItem->GetVideoInfoTag()->m_iUserRating)
       {
+#ifdef HAS_UPNP
+        if (URIUtils::IsUPnP(m_movieItem->GetPath()))
+        {
+          UPNP::CUPnP::SetUserRating(*m_movieItem, m_startUserrating);
+        }
+#endif
         CVideoDatabase db;
         if (db.Open())
         {
@@ -474,7 +481,7 @@ void CGUIDialogVideoInfo::SetMovie(const CFileItem *item)
 void CGUIDialogVideoInfo::Update()
 {
   // setup plot text area
-  std::shared_ptr<CSettingList> setting(std::dynamic_pointer_cast<CSettingList>( 
+  std::shared_ptr<CSettingList> setting(std::dynamic_pointer_cast<CSettingList>(
     CServiceBroker::GetSettingsComponent()->GetSettings()->GetSetting(CSettings::SETTING_VIDEOLIBRARY_SHOWUNWATCHEDPLOTS)));
   std::string strTmp = m_movieItem->GetVideoInfoTag()->m_strPlot;
   if (m_movieItem->GetVideoInfoTag()->m_type != MediaTypeTvShow)

@@ -74,6 +74,9 @@ public:
     static bool UpdateItem(const std::string& path,
                            const CFileItem& item);
 
+    static bool SetUserRating(const CFileItem& item,
+                              const int old_rating);
+
     static void RegisterUserdata(void* ptr);
     static void UnregisterUserdata(void* ptr);
 private:

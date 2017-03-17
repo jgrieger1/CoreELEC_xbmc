@@ -266,6 +266,20 @@ public:
     return InvokeUpdateObject(path.c_str(), values);
   }
 
+  bool SetUserRating(const CFileItem& item, const int old_rating)
+  {
+    if (!item.HasVideoInfoTag() || item.GetPath().empty()) {
+      return false;
+    }
+
+    std::set<std::pair<NPT_String, NPT_String>> values;
+    values.insert(std::make_pair(
+          NPT_String::Format("<xbmc:userrating>%d</xbmc:userrating>", old_rating),
+          NPT_String::Format("<xbmc:userrating>%d</xbmc:userrating>", item.GetVideoInfoTag()->m_iUserRating)));
+
+    return InvokeUpdateObject(item.GetPath().c_str(), values);
+  }  
+
   bool UpdateItem(const std::string& path, const CFileItem& item)
   {
     if (path.empty())
@@ -648,6 +662,20 @@ bool CUPnP::SaveFileState(const CFileItem& item,
       return browser->SaveFileState(item, bookmark, updatePlayCount);
   }
   return false;
+}
+
+/*----------------------------------------------------------------------
+|   CUPnP::SetUserRating
++---------------------------------------------------------------------*/
+bool
+CUPnP::SetUserRating(const CFileItem& item, const int old_rating)
+{
+    if (upnp && upnp->m_MediaBrowser) {
+        // dynamic_cast is safe here, avoids polluting CUPnP.h header file
+        CMediaBrowser* browser = dynamic_cast<CMediaBrowser*>(upnp->m_MediaBrowser);
+        return browser->SetUserRating(item, old_rating);
+    }
+    return false;
 }
 
 /*----------------------------------------------------------------------
