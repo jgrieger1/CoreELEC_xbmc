@@ -250,7 +250,7 @@ bool CGUIWindowVideoBase::OnItemInfo(const CFileItem& fileItem)
   const ADDON::ScraperPtr scraper = m_database.GetScraperForPath(strDir, settings, foundDirectly);
 
   if (!fileItem.HasVideoInfoTag() && !scraper && !(fileItem.IsPlugin() || fileItem.IsScript()) &&
-      !VIDEO_UTILS::HasItemVideoDbInformation(fileItem))
+      !VIDEO_UTILS::HasItemVideoDbInformation(fileItem) && !URIUtils::IsUPnP(strDir))
   {
     // We have no chance to fill a video info tag, neither scraper nor db data available.
     HELPERS::ShowOKDialogText(CVariant{20176}, // Show video information
