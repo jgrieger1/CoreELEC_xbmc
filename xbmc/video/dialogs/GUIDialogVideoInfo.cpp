@@ -731,6 +731,9 @@ void CGUIDialogVideoInfo::Play(bool resume)
     return;
   }
 
+  CFileItem movie(m_movieItem->GetItemToPlay());
+  if (m_movieItem->GetVideoInfoTag()->m_strFileNameAndPath.empty())
+    movie.SetPath(m_movieItem->GetPath());
   CGUIWindowVideoNav* pWindow = CServiceBroker::GetGUI()->GetWindowManager().GetWindow<CGUIWindowVideoNav>(WINDOW_VIDEO_NAV);
   if (pWindow)
   {
