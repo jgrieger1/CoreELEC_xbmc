@@ -27,6 +27,7 @@ public:
   {
     return false;
   }
+  void CECSend(const char* cecCommand) {}
 
   int GetButton(void) { return 0; }
   unsigned int GetHoldTime(void) { return 0; }
@@ -125,6 +126,7 @@ public:
   void UnregisterDevice(void);
   void StandbyDevices(void);
   bool ToggleDeviceState(CecStateChange mode = STATE_SWITCH_TOGGLE, bool forceType = false);
+  void CECSend(const char* cecCommand);
 
 private:
   bool InitialiseFeature(const PeripheralFeature feature) override;
