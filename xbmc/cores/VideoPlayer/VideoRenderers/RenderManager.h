@@ -209,6 +209,7 @@ protected:
   unsigned int m_dheight = 0;
   float m_fps = 0.0;
   unsigned int m_orientation = 0;
+  StreamHdrType m_hdrType = StreamHdrType::HDR_TYPE_NONE;
   int m_NumberBuffers = 0;
   std::string m_stereomode;
 
