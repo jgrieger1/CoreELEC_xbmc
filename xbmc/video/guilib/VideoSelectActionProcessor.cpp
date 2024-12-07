@@ -20,6 +20,7 @@
 #include "utils/StringUtils.h"
 #include "utils/Variant.h"
 #include "video/VideoUtils.h"
+#include "utils/URIUtils.h"
 
 using namespace VIDEO::GUILIB;
 
@@ -59,7 +60,8 @@ bool CVideoSelectActionProcessorBase::Process(Action action)
     case ACTION_INFO:
     {
       if (GetDefaultAction() == ACTION_INFO && !m_item->IsVideoDb() && !m_item->IsPlugin() &&
-          !m_item->IsScript() && !VIDEO_UTILS::HasItemVideoDbInformation(*m_item))
+          !m_item->IsScript() && !URIUtils::IsUPnP(m_item->GetPath()) &&
+          !VIDEO_UTILS::HasItemVideoDbInformation(*m_item))
       {
         // for items without info fall back to default play action
         return Process(CVideoPlayActionProcessorBase::GetDefaultAction());
