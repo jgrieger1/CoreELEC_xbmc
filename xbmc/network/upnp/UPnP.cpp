@@ -162,7 +162,7 @@ class CMediaBrowser : public PLT_SyncMediaBrowser, public PLT_MediaContainerChan
 {
 public:
   explicit CMediaBrowser(PLT_CtrlPointReference& ctrlPoint)
-    : PLT_SyncMediaBrowser(ctrlPoint, true),
+    : PLT_SyncMediaBrowser(ctrlPoint, false),
       m_logger(CServiceBroker::GetLogging().GetLogger("UPNP::CMediaBrowser"))
   {
     SetContainerListener(this);
