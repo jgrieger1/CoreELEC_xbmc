@@ -59,8 +59,13 @@ bool CVideoLibraryResetResumePointJob::Work(CVideoDatabase &db)
   for (const auto& item : items)
   {
 #ifdef HAS_UPNP
-    if (URIUtils::IsUPnP(item->GetPath()) && UPNP::CUPnP::SaveFileState(*item, CBookmark(), false /* updatePlayCount */))
+  if (URIUtils::IsUPnP(item->GetPath()))
+  {
+    CFileItem temp(*item);
+    temp.SetProperty("original_listitem_url", item->GetPath());
+    if (UPNP::CUPnP::SaveFileState(temp, CBookmark(), false /* updatePlayCount */))
       continue;
+  }
 #endif
 
     if (item->HasPVRRecordingInfoTag() &&
