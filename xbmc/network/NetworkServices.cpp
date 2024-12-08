@@ -133,6 +133,7 @@ CNetworkServices::CNetworkServices()
       CSettings::SETTING_SERVICES_UPNPSERVER,
       CSettings::SETTING_SERVICES_UPNPRENDERER,
       CSettings::SETTING_SERVICES_UPNPCONTROLLER,
+      CSettings::SETTING_SERVICES_UPNPCACHE,
       CSettings::SETTING_SERVICES_ESENABLED,
       CSettings::SETTING_SERVICES_ESPORT,
       CSettings::SETTING_SERVICES_ESALLINTERFACES,
@@ -390,6 +391,12 @@ bool CNetworkServices::OnSettingChanging(const std::shared_ptr<const CSetting>& 
     StopUPnPController();
     if (std::static_pointer_cast<const CSettingBool>(setting)->GetValue())
       return StartUPnPController();
+  }
+  else if (settingId == CSettings::SETTING_SERVICES_UPNPCACHE)
+  {
+    // always stop and restart
+    StopUPnPClient();
+    return StartUPnPClient();
   }
   else
 #endif // HAS_UPNP

@@ -24585,3 +24585,14 @@ msgid "50th Anniversary Edition"
 msgstr ""
 
 # 40000 to 40800 are reserved for Video Versions feature
+
+#: system/settings/settings.xml
+msgctxt "#80001"
+msgid "Enable UPnP Cache"
+msgstr ""
+
+#. Description of setting with label #80001 "Enable UPnP Cache"
+#: system/settings/settings.xml
+msgctxt "#80002"
+msgid "Enable the UPnP cache. This enables kodi to cache from UPnP server."
+msgstr ""
